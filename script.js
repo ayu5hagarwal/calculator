@@ -14,12 +14,14 @@ function division(a,b){
     return (a/b).toPrecision(4);
 }
 
-let firstNumber;
-let operator;
-let secondNumber;
+let firstNumber=0;
+let operator="";
+let secondNumber=0;
 
 
 function operate(operator,firstNumber,secondNumber){
+    firstNumber = parseFloat(firstNumber);
+    secondNumber = parseFloat(secondNumber);
     if(operator == "+"){
         return additon(firstNumber,secondNumber);
     }
@@ -39,69 +41,74 @@ let displayValue = "";
 const display = document.querySelector(".display");
 
 const equal = document.querySelector(".equal");
-equal.addEventListener('click', () => {operate});
+equal.addEventListener('click', () => {
+    displayValue = operate(operator,firstNumber,secondNumber);
+    display.textContent = displayValue;
+});
+
+
+function handleNumberClick(number){
+    displayValue += number;
+    display.textContent = displayValue;
+    if(operator === ""){
+        firstNumber = firstNumber*10 + number;
+    }
+    else{
+        secondNumber = secondNumber*10 + number;
+    }
+}
 
 
 const zero = document.querySelector(".zero");
 zero.addEventListener('click', () => {
-    displayValue += "0";
-    display.textContent = displayValue;
+    handleNumberClick(0);
 });
 
 
 const one = document.querySelector(".one");
 one.addEventListener('click', () => {
-    displayValue += "1";
-    display.textContent = displayValue;
+   handleNumberClick(1);
 });
 
 
 const two = document.querySelector(".two");
 two.addEventListener('click', () => {
-    displayValue += "2";
-    display.textContent = displayValue;
+    handleNumberClick(2);
 });
 
 const three = document.querySelector(".three");
 three.addEventListener('click', () => {
-    displayValue += "3";
-    display.textContent = displayValue;
+    handleNumberClick(3);
 });
 
 const four = document.querySelector(".four");
 four.addEventListener('click', () => {
-    displayValue += "4";
-    display.textContent = displayValue;
+    handleNumberClick(4);
 });
 
 const five = document.querySelector(".five");
 five.addEventListener('click', () => {
-    displayValue += "5";
-    display.textContent = displayValue;
+    handleNumberClick(5);
 });
 
 const six = document.querySelector(".six");
 six.addEventListener('click', () => {
-    displayValue += "6";
-    display.textContent = displayValue;
+    handleNumberClick(6);
 });
 
 const seven = document.querySelector(".seven");
 seven.addEventListener('click', () => {
-    displayValue += "7";
-    display.textContent = displayValue;
+    handleNumberClick(7);
 });
 
 const eight = document.querySelector(".eight");
 eight.addEventListener('click', () => {
-    displayValue += "8";
-    display.textContent = displayValue;
+    handleNumberClick(8);
 });
 
 const nine = document.querySelector(".nine");
 nine.addEventListener('click', () => {
-    displayValue += "9";
-    display.textContent = displayValue;
+    handleNumberClick(9);
 });
 
 
@@ -109,24 +116,28 @@ const add = document.querySelector(".add");
 add.addEventListener('click', () => {
     displayValue += "+";
     display.textContent = displayValue;
+    operator += "+";
 });
 
 const subtract = document.querySelector(".subtract");
 subtract.addEventListener('click', () => {
     displayValue += "-";
     display.textContent = displayValue;
+    operator += "-";
 });
 
 const multiply = document.querySelector(".multiply");
 multiply.addEventListener('click', () => {
-    displayValue += "x";
+    displayValue += "*";
     display.textContent = displayValue;
+    operator += "*";
 });
 
 const divide = document.querySelector(".divide");
 divide.addEventListener('click', () => {
     displayValue += "/";
     display.textContent = displayValue;
+    operator += "/";
 });
 
 
@@ -136,6 +147,15 @@ decimal.addEventListener('click', () => {
     display.textContent = displayValue;
 });
 
+
+const clear = document.querySelector(".clear");
+clear.addEventListener('click', () =>{
+    displayValue = "";
+    firstNumber = 0;
+    secondNumber = 0;
+    operator = "";  
+    display.textContent = displayValue; 
+});
 
 
 
