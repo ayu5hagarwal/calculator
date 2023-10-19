@@ -25,6 +25,7 @@ let result = 0;
 function operate(operator,firstNumber,secondNumber){
     firstNumber = parseFloat(firstNumber);
     secondNumber = parseFloat(secondNumber);
+
         if(operator == "+"){
             return additon(firstNumber,secondNumber);
         }
@@ -39,7 +40,7 @@ function operate(operator,firstNumber,secondNumber){
                 return "ERROR"
             }
             else{
-            return division(firstNumber,secondNumber);
+            return division(firstNumber,secondNumber).toFixed(5);
             }
         }
 
@@ -49,8 +50,10 @@ function operate(operator,firstNumber,secondNumber){
 
 const display = document.querySelector(".display");
 
+
 const equal = document.querySelector(".equal");
 equal.addEventListener('click', () => {
+    if(firstNumber != 0 && operator != "" && secondNumber != 0){
     result = operate(operator,firstNumber,secondNumber);  
     displayValue = result;
     display.textContent = displayValue;
@@ -59,17 +62,23 @@ equal.addEventListener('click', () => {
     firstNumber = result;
     console.log("equal");
     console.log(result);
+    }
 });
 
 
 function handleNumberClick(number){
-    displayValue += number;
-    display.textContent = displayValue;
     if(operator === ""){
         firstNumber = firstNumber*10 + number;
-    }
+        displayValue = firstNumber;
+    display.textContent = displayValue;
+}
     else{
+        if(number == "."){
+            secondNumber += ".";
+        }
         secondNumber = secondNumber*10 + number;
+        displayValue = secondNumber;
+        display.textContent = displayValue;
     }
     console.log(firstNumber);
     console.log(secondNumber);
@@ -77,9 +86,8 @@ function handleNumberClick(number){
 
 function handleOperatorClick(Operator){
     if(operator == ""){
-    displayValue += Operator;
-    display.textContent = displayValue;
     operator += Operator;
+    console.log(Operator);
     }
     else{
         result = operate(operator,firstNumber,secondNumber);  
@@ -89,9 +97,8 @@ function handleOperatorClick(Operator){
         secondNumber = 0;
         firstNumber = result;
         console.log(result);
-        displayValue += Operator;
-        display.textContent = displayValue;
         operator += Operator;
+        console.log(Operator);
 }
     }
 
@@ -171,12 +178,10 @@ divide.addEventListener('click', () => {
 });
 
 
-const decimal = document.querySelector(".decimal");
-decimal.addEventListener('click', () => {
-    displayValue += ".";
-    display.textContent = displayValue;
-});
-
+// const decimal = document.querySelector(".decimal");
+// decimal.addEventListener('click', () => {
+//     handleDecimal(".");
+// });
 
 const clear = document.querySelector(".clear");
 clear.addEventListener('click', () =>{
@@ -188,7 +193,24 @@ clear.addEventListener('click', () =>{
     display.textContent = displayValue; 
 });
 
-
-
-
+const deleting = document.querySelector(".delete");
+deleting.addEventListener('click', () => {
+        if(displayValue.toString().length > 0){
+        displayValue = displayValue.toString().slice(0,-1);
+        display.textContent = displayValue;
+        if(operator == ""){
+            firstNumber = parseFloat(displayValue);
+            if (isNaN(firstNumber)) {
+                firstNumber = 0;
+            }
+        }
+        else{
+            secondNumber = parseFloat(displayValue);
+            if (isNaN(secondNumber)) {
+                secondNumber = 0;
+            }
+        }
+        }
+    console.log("delete");
+});
 
