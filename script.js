@@ -15,10 +15,10 @@ function division(a,b){
 }
 
 let displayValue = "";
-let firstNumber=0;
+let firstNumber="";
 let operator="";
-let secondNumber=0;
-let result = 0;
+let secondNumber="";
+let result = "";
 
 
 
@@ -58,47 +58,53 @@ equal.addEventListener('click', () => {
     displayValue = result;
     display.textContent = displayValue;
     operator = "";
-    secondNumber = 0;
+    secondNumber = "";
     firstNumber = result;
-    console.log("equal");
-    console.log(result);
     }
 });
 
 
-function handleNumberClick(number){
-    if(operator === ""){
-        firstNumber = firstNumber*10 + number;
-        displayValue = firstNumber;
-    display.textContent = displayValue;
-}
-    else{
-        if(number == "."){
-            secondNumber += ".";
+
+function handleNumberClick(number) {
+    if (operator === "") {
+        if (number === "." && !displayValue.includes(".")) {
+            firstNumber = `${firstNumber}.`;
+            displayValue = firstNumber;
+            display.textContent = displayValue;
+        } else if (number !== ".") {
+            firstNumber = `${firstNumber}${number}`;
+            displayValue = firstNumber;
+            display.textContent = displayValue;
         }
-        secondNumber = secondNumber*10 + number;
-        displayValue = secondNumber;
-        display.textContent = displayValue;
+    } else {
+        if (number === "." && !displayValue.includes(".")) {
+            secondNumber = `${secondNumber}.`;
+            displayValue = secondNumber;
+            display.textContent = displayValue;
+        } else if (number !== ".") {
+            secondNumber = `${secondNumber}${number}`;
+            displayValue = secondNumber;
+            display.textContent = displayValue;
+        }
     }
-    console.log(firstNumber);
-    console.log(secondNumber);
+   
 }
+
+
+
 
 function handleOperatorClick(Operator){
     if(operator == ""){
     operator += Operator;
-    console.log(Operator);
     }
     else{
         result = operate(operator,firstNumber,secondNumber);  
         displayValue = result;
         display.textContent = displayValue;
         operator = "";
-        secondNumber = 0;
+        secondNumber = "";
         firstNumber = result;
-        console.log(result);
         operator += Operator;
-        console.log(Operator);
 }
     }
 
@@ -178,18 +184,18 @@ divide.addEventListener('click', () => {
 });
 
 
-// const decimal = document.querySelector(".decimal");
-// decimal.addEventListener('click', () => {
-//     handleDecimal(".");
-// });
+const decimal = document.querySelector(".decimal");
+decimal.addEventListener('click', () => {
+    handleNumberClick(".");
+});
 
 const clear = document.querySelector(".clear");
 clear.addEventListener('click', () =>{
     displayValue = "";
-    firstNumber = 0;
-    secondNumber = 0;
+    firstNumber = "";
+    secondNumber = "";
     operator = "";  
-    result = 0;
+    result = "";
     display.textContent = displayValue; 
 });
 
@@ -201,16 +207,18 @@ deleting.addEventListener('click', () => {
         if(operator == ""){
             firstNumber = parseFloat(displayValue);
             if (isNaN(firstNumber)) {
-                firstNumber = 0;
+                firstNumber = "";
             }
         }
         else{
             secondNumber = parseFloat(displayValue);
             if (isNaN(secondNumber)) {
-                secondNumber = 0;
+                secondNumber = "";
             }
         }
         }
-    console.log("delete");
 });
+
+
+
 
