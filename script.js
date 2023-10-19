@@ -11,39 +11,54 @@ function multiplication(a,b){
 }
 
 function division(a,b){
-    return (a/b).toPrecision(4);
+    return (a/b);
 }
 
+let displayValue = "";
 let firstNumber=0;
 let operator="";
 let secondNumber=0;
+let result = 0;
+
 
 
 function operate(operator,firstNumber,secondNumber){
     firstNumber = parseFloat(firstNumber);
     secondNumber = parseFloat(secondNumber);
-    if(operator == "+"){
-        return additon(firstNumber,secondNumber);
-    }
-    else if(operator == "-"){
-        return subtractraction(firstNumber,secondNumber);
-    }
-    if(operator == "*"){
-        return multiplication(firstNumber,secondNumber);
-    }
-    if(operator == "/"){
-        return division(firstNumber,secondNumber);
-    }
+        if(operator == "+"){
+            return additon(firstNumber,secondNumber);
+        }
+        else if(operator == "-"){
+            return subtractraction(firstNumber,secondNumber);
+        }
+        else if(operator == "*"){
+            return multiplication(firstNumber,secondNumber);
+        }
+        else if(operator == "/"){
+            if(secondNumber == 0){
+                return "ERROR"
+            }
+            else{
+            return division(firstNumber,secondNumber);
+            }
+        }
+
 }
 
-let displayValue = "";
+
 
 const display = document.querySelector(".display");
 
 const equal = document.querySelector(".equal");
 equal.addEventListener('click', () => {
-    displayValue = operate(operator,firstNumber,secondNumber);
+    result = operate(operator,firstNumber,secondNumber);  
+    displayValue = result;
     display.textContent = displayValue;
+    operator = "";
+    secondNumber = 0;
+    firstNumber = result;
+    console.log("equal");
+    console.log(result);
 });
 
 
@@ -56,7 +71,30 @@ function handleNumberClick(number){
     else{
         secondNumber = secondNumber*10 + number;
     }
+    console.log(firstNumber);
+    console.log(secondNumber);
 }
+
+function handleOperatorClick(Operator){
+    if(operator == ""){
+    displayValue += Operator;
+    display.textContent = displayValue;
+    operator += Operator;
+    }
+    else{
+        result = operate(operator,firstNumber,secondNumber);  
+        displayValue = result;
+        display.textContent = displayValue;
+        operator = "";
+        secondNumber = 0;
+        firstNumber = result;
+        console.log(result);
+        displayValue += Operator;
+        display.textContent = displayValue;
+        operator += Operator;
+}
+    }
+
 
 
 const zero = document.querySelector(".zero");
@@ -114,30 +152,22 @@ nine.addEventListener('click', () => {
 
 const add = document.querySelector(".add");
 add.addEventListener('click', () => {
-    displayValue += "+";
-    display.textContent = displayValue;
-    operator += "+";
+    handleOperatorClick("+");   
 });
 
 const subtract = document.querySelector(".subtract");
 subtract.addEventListener('click', () => {
-    displayValue += "-";
-    display.textContent = displayValue;
-    operator += "-";
+    handleOperatorClick("-");   
 });
 
 const multiply = document.querySelector(".multiply");
 multiply.addEventListener('click', () => {
-    displayValue += "*";
-    display.textContent = displayValue;
-    operator += "*";
+    handleOperatorClick("*");   
 });
 
 const divide = document.querySelector(".divide");
 divide.addEventListener('click', () => {
-    displayValue += "/";
-    display.textContent = displayValue;
-    operator += "/";
+    handleOperatorClick("/");   
 });
 
 
@@ -154,9 +184,9 @@ clear.addEventListener('click', () =>{
     firstNumber = 0;
     secondNumber = 0;
     operator = "";  
+    result = 0;
     display.textContent = displayValue; 
 });
-
 
 
 
